@@ -99,6 +99,7 @@ const allRecipe = async (req, res) => {
         })
 
         const totalRecipes = dbRecipes.concat(apiRecipes);
+        //console.log(totalRecipes)
         res.send(totalRecipes)
     } catch (error) {
         res.status(404).send('Fail allRecipe', error)
