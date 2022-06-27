@@ -14,7 +14,7 @@
 
 }
 
-.home-filtros {
+.home-filters {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -28,7 +28,7 @@
 
 .home-tarjetas {
     display: grid;
-    grid-template-columns: repeat(5, 2fr);
+    grid-template-columns: repeat(3, 2fr);
     gap: 20px;
 }
 
@@ -53,14 +53,14 @@
     margin-top: 5px;
 }
 
-.home-buttons {
+/* .home-buttons {
     display: flex;
     align-items: center;
     margin-right: 20px;
     grid-gap: 20px;
     gap: 20px;
     justify-content: flex-end;
-}
+} */
 
 
 .home-search button {

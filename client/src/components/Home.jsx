@@ -3,15 +3,24 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Card from "./Card";
 import Paginado from "./Paginado";
-import { getRecipes, getDiets, filterByDiets } from "../redux/actions";
-import './Home.css';
+import SearchBar from "./SearchBar";
+import { getRecipes, getDiets, orderBy, filterBydiets } from "../redux/actions";
+import "./Home.css";
 
 export default function Home() {
   const dispatch = useDispatch();
   const allRecipes = useSelector((state) => state.recipes); //traer estado del reducer
+  //console.log("state.recipes", allRecipes);
   const allDiets = useSelector((state) => state.diets);
+  // console.log("state.recipes", allDiets.length);
 
-  console.log("state.recipes", allRecipes);
+  const diet = allRecipes;
+
+  // ESTADO PARA FILTRAR POR NOMBRE DE LAS RECETAS//
+  const [name, setName] = useState("");
+
+  //ESTADO LOCAL PARA ORDENAR SEGÚN EL FILTRO//
+  const [, setOrder] = useState("");
 
   // CARGAR TODAS LAS RECETAS EN EL ESTADO //
   useEffect(() => {
@@ -26,16 +35,32 @@ export default function Home() {
   // BOTÓN PARA BORRAR TODOS LOS FILTROS //
   function handleClick(e) {
     e.preventDefault();
-    // setActivity("");
-    // setName("");
+    setName("");
+    setPage(1);
+    dispatch(getDiets());
     dispatch(getRecipes());
+  }
+
+  //ordenamientos alfa y healthScore
+  function handleOrder(e) {
+    e.preventDefault();
+    dispatch(orderBy(e.target.value));
+    setOrder(`Ordenado ${e.target.value}`);
+    setPage(1);
+  }
+
+  function handleFilterBydiets(e) {
+    e.preventDefault();
+    dispatch(filterBydiets(e.target.value));
+    setOrder(`Ordenado ${e.target.value}`);
+    setPage(1);
   }
 
   //PAGINADO//
 
   const [page, setPage] = useState(1);
 
-  //cantidad paises por página
+  //cantidad recetas por página
   let recipesPerPage = 0;
   if (page === 1) {
     recipesPerPage = 9;
@@ -50,28 +75,16 @@ export default function Home() {
   const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage; // 0, 10, 20, 30
 
   // me devuelve un array con los indices seleccionedos ej: pág 1 index 0 a 10, pág 2 index 10 a 20, )
-  const currentRecipe = allRecipes.slice(
-    indexOfFirstRecipe,
-    indexOfLastRecipe
-  );
-
+  const currentRecipe = allRecipes.slice(indexOfFirstRecipe, indexOfLastRecipe);
+  console.log("current", currentRecipe);
   const paginado = (pageNumber) => {
     setPage(pageNumber);
   };
-  //ESTADO LOCAL PARA FILTRAR POR DIETA//
-  const [diets, setDiets] = useState("");
-
-  //ESTADO LOCAL PARA SEGÚN EL FILTRO//
-  const [, setOrder] = useState("");
-
-  //FUNCIÓN PARA ORDENAR POR DIETA
-  function handleFilterByDiet(e) {
-    dispatch(filterByDiets(e.target.value));
-    setPage(1);
-    setOrder(`Ordenado ${e.target.value}`);
-  }
 
   return (
+    // NAV-BAR
+    //LOGO
+
     <div className="home">
       <nav className="home-nav">
         <div className="home-logo">
@@ -83,16 +96,20 @@ export default function Home() {
           ></img>
         </div>
 
+        {/* PAGINADO */}
+
         <div>
-        <Paginado 
-      page={page}
-      recipesPerPage={recipesPerPage}
-      totalRecipe={allRecipes.length}
-      paginado={paginado}
-      />
+          <Paginado
+            page={page}
+            recipesPerPage={recipesPerPage}
+            totalRecipe={allRecipes.length}
+            paginado={paginado}
+          />
         </div>
 
-        <div className="home-buttons">
+        {/* NAVIGATION BUTTONS */}
+
+        <div className="paginado">
           <Link to="/activities">
             <button>CREATE</button>
           </Link>
@@ -102,38 +119,95 @@ export default function Home() {
         </div>
       </nav>
 
-      <div className="home-search">
-        <button
-          onClick={(e) => {
-            handleClick(e);
-          }}
+      <div className="home-filters">
+        {/* FILTROS */}
+        {/* FIND BY NAME FILTER */}
+
+        <SearchBar
+          setName={setName}
+          setPage={setPage}
+          setOrder={setOrder}
+          name={name}
+        />
+
+        {/* DIET FILTER */}
+        {/* <div>
+          <select onChange={(e) => handleFilterBydiets(e)}>
+            <option value={"all"}>All Diet</option>
+            <option value={"dairyfree"}>dairy free</option>
+          </select>
+        </div> */}
+
+        <select
+          onChange={(e) => handleFilterBydiets(e)}
+          defaultValue=""
+          className="selects"
         >
-          CLEAR
-        </button>
+          <option>All Diets</option>
+
+          {allDiets.map((e) =>
+            e.name ? (
+              <option key={e.id}>{e.name}</option>
+            ) : (
+              <option key={e.id}>{e}</option>
+            )
+          )}
+        </select>
+
+        {/* <div>
+          <select onChange={(e)=>handleFilterBydiets(e)}>
+            <option value={"all"}>All Diet</option>
+            <option value={"dairyfree"}>dairy free</option>
+            <option value={"glutenfree"}>gluten free</option>
+            <option value={"ketogenic"}>ketogenic</option>
+            <option value={"lactoovovegetarian"}>lacto ovo vegetarian</option>
+            <option value={"paleolithic"}>paleolithic</option>
+            <option value={"pescatarian"}>pescatarian</option>
+            <option value={"primal"}>primal</option>
+            <option value={"vegan"}>vegan</option>
+            <option value={"vegan"}>whole30</option>
+          </select>
+        </div> */}
+
+        {/* ORDENAMIENTOS */}
+
+        <div className="home-filtros">
+          <select onChange={(e) => handleOrder(e)}>
+            <option value="A-Z">Name (A - Z)</option>
+            <option value="Z-A">Name(Z - A)</option>
+            <option value="Asc">HealthScore(Asc)</option>
+            <option value="Des">HealthScore(Des)</option>
+          </select>
+        </div>
+
+        {/* CLEAR BUTTON */}
+
+        <div className="home-search">
+          <button
+            onClick={(e) => {
+              handleClick(e);
+            }}
+          >
+            CLEAR
+          </button>
+        </div>
       </div>
 
-      <p>Diet</p>
-      <select value={diets} onChange={(e) => handleFilterByDiet(e)}>
-        <option value="">All</option>
-        {allDiets.map((e) => (
-          <option value={e.diet} key={e.id}>
-            {e.diet}
-          </option>
-        ))}
-      </select>
+      {/* COMPONENT CARDS */}
 
       <div className="home-tarjetas">
-        {currentRecipe.length
-          ? currentRecipe?.map((e) => {
-              return (
-                <Link to={"/home/" + e.id} key={e.id}>
-                  <Card title={e.title} image={e.image} diet={e.diets} />
-                </Link>
-              );
-            })
-          : alert("¡IN THIS MOMENT DO NOT EXISTS THIS RECIPE!")}
+        {currentRecipe.length ? (
+          currentRecipe?.map((e) => {
+            return (
+              <Link to={"/home/" + e.id} key={e.id}>
+                <Card title={e.title} image={e.image} diet={diet} />
+              </Link>
+            );
+          })
+        ) : (
+          <h3>Await a few second..!</h3>
+        )}
       </div>
-      
     </div>
   );
 }

@@ -19,7 +19,7 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
-const {getApiType} = require('./src/controllers/type');
+const {getApiDiets} = require('./src/controllers/diets');
 
 
 // Syncing all the models at once.
@@ -28,7 +28,7 @@ conn.sync({ force: false }).then(async () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });
   try {
-    await getApiType()
+    await getApiDiets()
     console.log('Diet loaded');
 
   } catch (error) {

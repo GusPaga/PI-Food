@@ -1,10 +1,11 @@
-import { GET_RECIPES, GET_DIETS, FILTER_BY_DIETS } from './actions';
+import { GET_RECIPES, GET_DIETS, FILTER_BY_RECIPE_TITLE, ORDER_BY, FILTER_BY_DIETS, GET_DETAILS } from './actions';
 
 const initialState = {
     recipes: [],
     allRecipes: [],
     diets: [],
     allDiets: [],
+    details: [],
 }
 
 export default function rootReducer(state = initialState, action) {
@@ -24,24 +25,77 @@ export default function rootReducer(state = initialState, action) {
                 allDiets: action.payload,
             }
 
-        case FILTER_BY_DIETS:
-            const diets = state.diets;
-            const filteredDiets = diets.filter((e) => e.diet === action.payload)
-            let recipes = filteredDiets.map((e) => {
-                return {
-                    image: e.recipes.image,
-                    name: e.recipes.name,
-                    diet: e.recipes.diet
-                }
-            })
+
+        case FILTER_BY_RECIPE_TITLE:
             return {
                 ...state,
-                recipes: recipes,
-                allDiets: filteredDiets,
+                recipes: action.payload,
             }
 
+        case ORDER_BY:
+            let orderArr;
+            if (action.payload === 'A-Z') {
+                orderArr = state.recipes.sort(function (a, b) {
+                    if (a.title > b.title) {
+                        return 1;
+                    }
+                    if (b.title > a.title) {
+                        return -1;
+                    }
+                    return 0;
+                })
+            } else if (action.payload === 'Z-A') {
+                orderArr = state.recipes.sort(function (a, b) {
+                    if (a.title > b.title) {
+                        return -1;
+                    }
+                    if (b.title > a.title) {
+                        return 1;
+                    }
+                    return 0;
+                })
+            } else if (action.payload === 'Asc') {
+                orderArr = state.recipes.sort(function (a, b) {
+                    if (a.healthScore > b.healthScore) {
+                        return 1;
+                    }
+                    if (b.title > a.title) {
+                        return -1;
+                    }
+                    return 0;
+                })
+            } else if (action.payload === 'Des') {
+                orderArr = state.recipes.sort(function (a, b) {
+                    if (a.healthScore > b.healthScore) {
+                        return -1;
+                    }
+                    if (b.title > a.title) {
+                        return 1;
+                    }
+                    return 0;
+                })
+            }
+            return {
+                ...state,
+                recipes: orderArr
+            }
+        case FILTER_BY_DIETS:
+            let allDiets = state.allDiets;
+            let filteredDiet = action.payload === 'all' ? allDiets : allDiets.filter((e) => e.diet === action.payload)
+            return {
+                ...state,
+                diets: filteredDiet
+            }
+
+        case GET_DETAILS:
+            return{
+                ...state,
+                details: action.payload
+            }
         default:
             return { ...state }
     }
 };
+
+
 

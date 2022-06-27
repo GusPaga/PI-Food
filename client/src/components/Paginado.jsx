@@ -22,9 +22,9 @@ export default function Paginado({
 return (
     <nav>
       <ul className="paginado">
-        {page > 1 && (<button onClick={(e) => paginado(page - 1)}>BACK</button>)}
+        {page > 1 && (<button onClick={(e) => paginado(page - 1)}>PREV</button>)}
         <button>{page}</button>
-        {page < totalRecipe/recipesPerPage && (<button onClick={(e) => paginado(page + 1)}>FRONT</button>)}
+        {page < totalRecipe/recipesPerPage && (<button onClick={(e) => paginado(page + 1)}>NEXT</button>)}
       </ul>
     </nav>
   );

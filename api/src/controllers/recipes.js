@@ -1,4 +1,4 @@
-const { Type, Recipe } = require('../db')
+const { Diet, Recipe } = require('../db')
 const { apiKey } = process.env;
 const axios = require('axios');
 
@@ -16,20 +16,19 @@ const recipeById = async (req, res) => {
         if (isNaN(Number(id))) {
             // BUSCAR RECETAS EN LA DB //
             let findDb = await Recipe.findAll({
-                attributes: ['id', 'title', 'summary', 'healthScore', 'analyzedInstructions', 'image'],
-                include: [{
-                    model: Type,
-                }]
+                include: {
+                    model: Diet
+                }
             })
             let dbRecipes = findDb.map((e) => {
                 return {
                     id: e.id,
+                    diet: e.diets,
+                    image: e.image,
                     title: e.title,
                     summary: e.summary,
                     healthScore: e.healthScore,
-                    diets: e.diets,
                     analyzedInstructions: e.analyzedInstructions,
-                    image: e.image
                 }
             })
             filterDb = await dbRecipes.filter((e) => {
@@ -45,12 +44,12 @@ const recipeById = async (req, res) => {
             let apiRecipes = data.map((e) => {
                 return {
                     id: e.id,
+                    diet: e.diets,
+                    image: e.image,
                     title: e.title,
                     summary: e.summary,
                     healthScore: e.healthScore,
-                    diets: e.diets,
                     analyzedInstructions: (e.analyzedInstructions.map((e) => (e.steps.map(e => e.step)))),
-                    image: e.image
                 }
             })
 
@@ -64,42 +63,41 @@ const recipeById = async (req, res) => {
 
 const allRecipe = async (req, res) => {
     try {
+          // BUSCAR RECETAS EN LA API //
+          const apiInfo = (await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=100&addRecipeInformation=true`)).data
+          let data = apiInfo.results;
+          let apiRecipes = data.map((e) => {
+              return {
+                  id: e.id,
+                  diet: e.diets,
+                  title: e.title,
+                  image: e.image,
+                  summary: e.summary,
+                  healthScore: e.healthScore,
+                  analyzedInstructions: (e.analyzedInstructions.map((e) => (e.steps.map(e => e.step)))),
+              }
+          })
+          console.log('apiRecipes', apiRecipes.length)
         // BUSCAR RECETAS EN LA DB //
         let findDb = await Recipe.findAll({
-            attributes: ['id', 'title', 'summary', 'healthScore', 'analyzedInstructions', 'image'],
-            include: [{
-                model: Type,
-            }]
+            include: {
+                model: Diet
+            }
         })
         let dbRecipes = findDb.map((e) => {
             return {
                 id: e.id,
+                diet: e.diets,
+                image: e.image,
                 title: e.title,
                 summary: e.summary,
                 healthScore: e.healthScore,
-                diets: e.diets,
                 analyzedInstructions: e.analyzedInstructions,
-                image: e.image
             }
         })
-
-        // BUSCAR RECETAS EN LA API //
-        const apiInfo = (await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=100&addRecipeInformation=true`)).data
-        let data = apiInfo.results;
-        let apiRecipes = data.map((e) => {
-            return {
-                id: e.id,
-                title: e.title,
-                summary: e.summary,
-                healthScore: e.healthScore,
-                diets: e.diets,
-                analyzedInstructions: (e.analyzedInstructions.map((e) => (e.steps.map(e => e.step)))),
-                image: e.image
-            }
-        })
+        console.log('Total Recipe in DB', findDb.length)    
 
         const totalRecipes = dbRecipes.concat(apiRecipes);
-        //console.log(totalRecipes)
         res.send(totalRecipes)
     } catch (error) {
         res.status(404).send('Fail allRecipe', error)
@@ -116,20 +114,19 @@ const recipeByName = async (req, res) => {
 
             // BUSCAR RECETAS EN LA DB //
             let findDb = await Recipe.findAll({
-                attributes: ['id', 'title', 'summary', 'healthScore', 'analyzedInstructions', 'image'],
                 include: [{
-                    model: Type,
+                    model: Diet,
                 }]
             })
             let dbRecipes = findDb.map((e) => {
                 return {
                     id: e.id,
                     title: e.title,
+                    diets: e.diets,
+                    image: e.image,
                     summary: e.summary,
                     healthScore: e.healthScore,
-                    diets: e.diets,
                     analyzedInstructions: e.analyzedInstructions,
-                    image: e.image
                 }
             })
 
@@ -144,12 +141,12 @@ const recipeByName = async (req, res) => {
             let apiRecipes = data.map((e) => {
                 return {
                     id: e.id,
+                    diets: e.name,
                     title: e.title,
+                    image: e.image,
                     summary: e.summary,
                     healthScore: e.healthScore,
-                    diets: e.diets,
                     analyzedInstructions: (e.analyzedInstructions.map((e) => (e.steps.map(e => e.step)))),
-                    image: e.image
                 }
             })
             filterApi = await apiRecipes.filter((e) => {

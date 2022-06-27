@@ -1,9 +1,9 @@
-const { Type, Recipe } = require('../db')
+const { Diet, Recipe } = require('../db')
 
 // CREAR RECETAS //
 const createRecipes = async (req, res) => {
     try {
-        const { title, summary, healthScore, analyzedInstructions, image, diets } = req.body;
+        const { title, summary, healthScore, analyzedInstructions, image, diet } = req.body;
 
         //busco si la receta ya existe //
         let findByRecipe = await Recipe.findOne({
@@ -15,7 +15,7 @@ const createRecipes = async (req, res) => {
         })
 
         // busco todos los tipos de dietas //
-        let addtype = await Type.findAll({ where: { diets } });
+        let addDiet = await Diet.findAll({ where: {name:diet} });
 
         if (!findByRecipe) {
             let newRecipe = await Recipe.create({
@@ -25,11 +25,11 @@ const createRecipes = async (req, res) => {
                 healthScore,
                 analyzedInstructions,
             })
-            await newRecipe.addType(addtype);
+            await newRecipe.addDiet(addDiet);
             res.send('Recipe Created');
 
         } else {
-            await findByRecipe.addType(addtype);
+            await findByRecipe.addDiet(addDiet);
             res.send('This Recipe is exists');
         }
     } catch (error) {
