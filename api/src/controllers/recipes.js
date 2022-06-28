@@ -24,11 +24,11 @@ const recipeById = async (req, res) => {
                 return {
                     id: e.id,
                     diet: e.diets,
-                    image: e.image,
+                    image: e.image.length ? e.image : "image not available",
                     title: e.title,
-                    summary: e.summary,
+                    summary: e.summary.length ? e.summary : "Summary not available",
                     healthScore: e.healthScore,
-                    analyzedInstructions: e.analyzedInstructions,
+                    analyzedInstructions: e.analyzedInstructions.length ? e.analyzedInstructions : "Analyze not available",
                 }
             })
             filterDb = await dbRecipes.filter((e) => {
@@ -44,12 +44,12 @@ const recipeById = async (req, res) => {
             let apiRecipes = data.map((e) => {
                 return {
                     id: e.id,
-                    diet: e.diets,
-                    image: e.image,
+                    diet: e.diets.length ? e.diets : "Diet not available",
                     title: e.title,
-                    summary: e.summary,
+                    image: e.image,
+                    summary: e.summary.length ? e.summary : "Summary not available",
                     healthScore: e.healthScore,
-                    analyzedInstructions: (e.analyzedInstructions.map((e) => (e.steps.map(e => e.step)))),
+                    analyzedInstructions: e.analyzedInstructions.length ? e.analyzedInstructions[0].steps.map((e) => e.step) : ["Analize no available"],
                 }
             })
 
@@ -57,27 +57,27 @@ const recipeById = async (req, res) => {
             res.send(filterApi);
         }
     } catch (error) {
-        res.status(404).send('Fail recipeById', error)
+        res.status(400).send({ 'Fail recipeById': error })
     }
 };
 
 const allRecipe = async (req, res) => {
     try {
-          // BUSCAR RECETAS EN LA API //
-          const apiInfo = (await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=100&addRecipeInformation=true`)).data
-          let data = apiInfo.results;
-          let apiRecipes = data.map((e) => {
-              return {
-                  id: e.id,
-                  diet: e.diets,
-                  title: e.title,
-                  image: e.image,
-                  summary: e.summary,
-                  healthScore: e.healthScore,
-                  analyzedInstructions: (e.analyzedInstructions.map((e) => (e.steps.map(e => e.step)))),
-              }
-          })
-          console.log('apiRecipes', apiRecipes.length)
+        // BUSCAR RECETAS EN LA API //
+        const apiInfo = (await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=100&addRecipeInformation=true`)).data
+        let data = apiInfo.results;
+        let apiRecipes = data.map((e) => {
+            return {
+                id: e.id,
+                diet: e.diets.length ? e.diets : "Diet not available",
+                title: e.title,
+                image: e.image,
+                summary: e.summary.length ? e.summary : "Summary not available",
+                healthScore: e.healthScore,
+                analyzedInstructions: e.analyzedInstructions.length ? e.analyzedInstructions[0].steps.map((e) => e.step) : ["Analize no available"],
+            }
+        })
+        //console.log('apiRecipes', apiRecipes)
         // BUSCAR RECETAS EN LA DB //
         let findDb = await Recipe.findAll({
             include: {
@@ -88,19 +88,31 @@ const allRecipe = async (req, res) => {
             return {
                 id: e.id,
                 diet: e.diets,
-                image: e.image,
+                image: e.image.length ? e.image : "image not available",
                 title: e.title,
-                summary: e.summary,
+                summary: e.summary.length ? e.summary : "Summary not available",
                 healthScore: e.healthScore,
-                analyzedInstructions: e.analyzedInstructions,
+                analyzedInstructions: e.analyzedInstructions.length ? e.analyzedInstructions : "Analyze not available",
             }
         })
-        console.log('Total Recipe in DB', findDb.length)    
+        // let dbRecipes = findDb.map((e) => {
+        //     return {
+        //         id: e.id,
+        //         diet: e.diets.length ? e.diets : "Diet not available",
+        //         image: e.image.length ? e.image : "image not available",
+        //         title: e.title.length ? e.title : "title not available",
+        //         summary: e.summary.length ? e.summary : "Summary not available",
+        //         healthScore: e.healthScore.length ? e.healthScore : "Health Score not available",
+        //         analyzedInstructions: e.analyzedInstructions.length ? e.analyzedInstructions : "Analyze not available",
+        //     }
+        // })
+       // console.log('Total Recipe in DB', findDb)
 
         const totalRecipes = dbRecipes.concat(apiRecipes);
+        //console.log('recipes test', totalRecipes)
         res.send(totalRecipes)
     } catch (error) {
-        res.status(404).send('Fail allRecipe', error)
+        res.status(400).send({ "Fail allRecipe": error })
     }
 }
 
@@ -121,12 +133,12 @@ const recipeByName = async (req, res) => {
             let dbRecipes = findDb.map((e) => {
                 return {
                     id: e.id,
+                    diet: e.diets,
+                    image: e.image.length ? e.image : "image not available",
                     title: e.title,
-                    diets: e.diets,
-                    image: e.image,
-                    summary: e.summary,
+                    summary: e.summary.length ? e.summary : "Summary not available",
                     healthScore: e.healthScore,
-                    analyzedInstructions: e.analyzedInstructions,
+                    analyzedInstructions: e.analyzedInstructions.length ? e.analyzedInstructions : "Analyze not available",
                 }
             })
 
@@ -141,12 +153,12 @@ const recipeByName = async (req, res) => {
             let apiRecipes = data.map((e) => {
                 return {
                     id: e.id,
-                    diets: e.name,
+                    diet: e.diets.length ? e.diets : "Diet not available",
                     title: e.title,
                     image: e.image,
-                    summary: e.summary,
+                    summary: e.summary.length ? e.summary : "Summary not available",
                     healthScore: e.healthScore,
-                    analyzedInstructions: (e.analyzedInstructions.map((e) => (e.steps.map(e => e.step)))),
+                    analyzedInstructions: e.analyzedInstructions.length ? e.analyzedInstructions[0].steps.map((e) => e.step) : ["Analize no available"],
                 }
             })
             filterApi = await apiRecipes.filter((e) => {
@@ -156,13 +168,14 @@ const recipeByName = async (req, res) => {
             })
 
             const totalRecipes = filterDb.concat(filterApi);
+            console.log(totalRecipes)
             res.send(totalRecipes)
 
         } else {
-            res.status(404).send('Do not exists this Recipe!')
+            res.status(400).send('Do not exists this Recipe!')
         }
     } catch (error) {
-        res.status(404).send('Fail recipeByName', error);
+        res.status(400).send({ 'Fail recipeByName': error });
     }
 };
 

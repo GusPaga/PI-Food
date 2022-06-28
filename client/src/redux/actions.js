@@ -12,13 +12,13 @@ export function getRecipes() {
     return async function (dispatch) {
         try {
             let allRecipes = await axios.get('http://localhost:3001/recipes');
-            //console.log('actions', allRecipes.data)
+            console.log('actions', allRecipes.data)
             return dispatch({
                 type: GET_RECIPES,
                 payload: allRecipes.data
             });
         } catch (error) {
-            console.log('Fail actions.getRecipes', error);
+            console.log({'Fail actions getRecipes': error});
         };
     };
 };
@@ -33,7 +33,7 @@ export function getDiets() {
                 payload: allDiets.data
             });
         } catch (error) {
-            console.log('Fail actions.getDiets', error);
+            console.log({'Fail actions getDiets': error});
         };
     };
 };
@@ -50,7 +50,7 @@ export function findByTitle(name) {
                 payload: titles.data,
             })
         } catch (error) {
-            console.log('Fail actions-findByTitle', error)
+            console.log({'Fail actions findByTitle': error})
         }
     }
 }
@@ -76,12 +76,13 @@ export function getDetails(id) {
     return async function (dispatch) {
         try {
             let details = await axios.get(`http://localhost:3001/recipes/${id}`);
+            //console.log('actions getDetais', details.data[0])
             return dispatch({
                 type: GET_DETAILS,
-                payload: details.data
+                payload: details.data[0]
             })
         } catch (error) {
-            console.log('Fail getDetails', error)
+            console.log({'Fail getDetails': error})
         }
     }
 }
