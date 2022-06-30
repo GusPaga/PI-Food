@@ -75,7 +75,7 @@
     background-color: #1B1464;
 }
 
-ul li button {
+/* ul li button {
     background-color: #ffffffb0;
     color: black;
     border: 1px solid grey;
@@ -83,11 +83,11 @@ ul li button {
     height: 30px;
     width: 35px;
     font-size: large;
-}
+} */
 
-ul li button:hover {
+/* ul li button:hover {
     background-color: #1B1464;
-}
+} */
 
 .home-filtros p {
     text-transform: uppercase;

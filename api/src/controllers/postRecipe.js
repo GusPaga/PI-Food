@@ -15,7 +15,7 @@ const createRecipes = async (req, res) => {
         })
 
         // busco todos los tipos de dietas //
-        let addDiet = await Diet.findAll({ where: {name:diet} });
+        let addDiet = await Diet.findAll({ where: { name: diet } });
 
         if (!findByRecipe) {
             let newRecipe = await Recipe.create({
@@ -33,7 +33,7 @@ const createRecipes = async (req, res) => {
             res.send('This Recipe is exists');
         }
     } catch (error) {
-        res.status(404).send('Post to Recipes Fail...')
+        res.status(400).send({ 'Post to Recipes Fail...': error })
     }
 };
 module.exports = { createRecipes };

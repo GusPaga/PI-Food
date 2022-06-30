@@ -1,3 +1,7 @@
+p{
+    text-align: justify;
+    font-style: italic;
+}
 .det-logo {
     display: flex;
     align-items: center;
@@ -44,7 +48,7 @@
     display: block;
 }
 
-det-buttons:focus{
+.det-buttons:focus{
     background-color: rgba(0, 0, 0, 0.479);
     color: white;
 }

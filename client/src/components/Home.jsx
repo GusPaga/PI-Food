@@ -76,7 +76,7 @@ export default function Home() {
 
   // me devuelve un array con los indices seleccionedos ej: pág 1 index 0 a 10, pág 2 index 10 a 20, )
   const currentRecipe = allRecipes.slice(indexOfFirstRecipe, indexOfLastRecipe);
-  console.log("current", currentRecipe);
+  //console.log("current", currentRecipe);
   const paginado = (pageNumber) => {
     setPage(pageNumber);
   };
@@ -110,7 +110,7 @@ export default function Home() {
         {/* NAVIGATION BUTTONS */}
 
         <div className="paginado">
-          <Link to="/activities">
+          <Link to="/form">
             <button>CREATE</button>
           </Link>
           <Link to="/">
@@ -128,6 +128,7 @@ export default function Home() {
           setPage={setPage}
           setOrder={setOrder}
           name={name}
+          diet={diet}
         />
 
         {/* DIET FILTER */}

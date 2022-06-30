@@ -22,10 +22,10 @@ const recipeById = async (req, res) => {
             })
             let dbRecipes = findDb.map((e) => {
                 return {
+                    title: e.title,
                     id: e.id,
                     diet: e.diets,
                     image: e.image.length ? e.image : "image not available",
-                    title: e.title,
                     summary: e.summary.length ? e.summary : "Summary not available",
                     healthScore: e.healthScore,
                     analyzedInstructions: e.analyzedInstructions.length ? e.analyzedInstructions : "Analyze not available",
@@ -43,9 +43,9 @@ const recipeById = async (req, res) => {
             let data = apiInfo.results;
             let apiRecipes = data.map((e) => {
                 return {
+                    title: e.title,
                     id: e.id,
                     diet: e.diets.length ? e.diets : "Diet not available",
-                    title: e.title,
                     image: e.image,
                     summary: e.summary.length ? e.summary : "Summary not available",
                     healthScore: e.healthScore,
@@ -68,9 +68,9 @@ const allRecipe = async (req, res) => {
         let data = apiInfo.results;
         let apiRecipes = data.map((e) => {
             return {
+                title: e.title,
                 id: e.id,
                 diet: e.diets.length ? e.diets : "Diet not available",
-                title: e.title,
                 image: e.image,
                 summary: e.summary.length ? e.summary : "Summary not available",
                 healthScore: e.healthScore,
@@ -78,7 +78,7 @@ const allRecipe = async (req, res) => {
             }
         })
         //console.log('apiRecipes', apiRecipes)
-        // BUSCAR RECETAS EN LA DB //
+        //BUSCAR RECETAS EN LA DB //
         let findDb = await Recipe.findAll({
             include: {
                 model: Diet
@@ -86,27 +86,15 @@ const allRecipe = async (req, res) => {
         })
         let dbRecipes = findDb.map((e) => {
             return {
+                title: e.title,
                 id: e.id,
                 diet: e.diets,
-                image: e.image.length ? e.image : "image not available",
-                title: e.title,
-                summary: e.summary.length ? e.summary : "Summary not available",
+                image: e.image,
+                summary: e.summary,
                 healthScore: e.healthScore,
-                analyzedInstructions: e.analyzedInstructions.length ? e.analyzedInstructions : "Analyze not available",
+                analyzedInstructions: e.analyzedInstructions,
             }
         })
-        // let dbRecipes = findDb.map((e) => {
-        //     return {
-        //         id: e.id,
-        //         diet: e.diets.length ? e.diets : "Diet not available",
-        //         image: e.image.length ? e.image : "image not available",
-        //         title: e.title.length ? e.title : "title not available",
-        //         summary: e.summary.length ? e.summary : "Summary not available",
-        //         healthScore: e.healthScore.length ? e.healthScore : "Health Score not available",
-        //         analyzedInstructions: e.analyzedInstructions.length ? e.analyzedInstructions : "Analyze not available",
-        //     }
-        // })
-       // console.log('Total Recipe in DB', findDb)
 
         const totalRecipes = dbRecipes.concat(apiRecipes);
         //console.log('recipes test', totalRecipes)
@@ -132,15 +120,16 @@ const recipeByName = async (req, res) => {
             })
             let dbRecipes = findDb.map((e) => {
                 return {
+                    title: e.title,
                     id: e.id,
                     diet: e.diets,
                     image: e.image.length ? e.image : "image not available",
-                    title: e.title,
                     summary: e.summary.length ? e.summary : "Summary not available",
                     healthScore: e.healthScore,
                     analyzedInstructions: e.analyzedInstructions.length ? e.analyzedInstructions : "Analyze not available",
                 }
             })
+            console.log('filter DB', dbRecipes)
 
             filterDb = await dbRecipes.filter((e) => {
                 if (FindNeedle(e.title.toLowerCase(), name.toLowerCase()) > -1) {
@@ -152,9 +141,9 @@ const recipeByName = async (req, res) => {
             let data = apiInfo.results;
             let apiRecipes = data.map((e) => {
                 return {
+                    title: e.title,
                     id: e.id,
                     diet: e.diets.length ? e.diets : "Diet not available",
-                    title: e.title,
                     image: e.image,
                     summary: e.summary.length ? e.summary : "Summary not available",
                     healthScore: e.healthScore,
@@ -166,9 +155,9 @@ const recipeByName = async (req, res) => {
                     return (e);
                 }
             })
+            console.log('filter api', apiRecipes)
 
             const totalRecipes = filterDb.concat(filterApi);
-            console.log(totalRecipes)
             res.send(totalRecipes)
 
         } else {

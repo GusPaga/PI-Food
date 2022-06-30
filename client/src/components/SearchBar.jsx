@@ -19,7 +19,7 @@ export default function SearchBar({ setPage, name, setName, setOrder }) {
   function handleSubmit(e) {
     e.preventDefault();
     if (name === "") {
-      alert("must write an ingredient");
+      alert("must write an recipe");
       return;
     }
     dispatch(findByTitle(name));

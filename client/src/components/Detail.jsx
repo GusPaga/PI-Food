@@ -81,7 +81,7 @@ export default function Detail() {
             <h3>Summary:</h3>
             {details.summary ? (
               <p>
-                {details.summary.replace(/(<b>|<\/b>|<a href=|<\/a>)/g, "")}
+                {details.summary.replaceAll(/(<b>|<\/b>|<a href=|<\/a>|>)/g, " ")}
               </p>
             ) : (
               <p>{details.summary}</p>
