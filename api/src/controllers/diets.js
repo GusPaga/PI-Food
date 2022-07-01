@@ -4,6 +4,7 @@ const axios = require('axios');
 
 
 
+
 let getDiets = async (req, res) => {
     try {
         const dbDiet = await Diet.findAll({ include: Recipe })
@@ -66,7 +67,7 @@ const getApiDiets = async () => {
         }
 
         let diet = result.sort()
-    
+
         // ENVIAR DATOS A LA BASE //
         for (let i = 0; i < diet.length - 1; i++) {
             await Diet.findOrCreate({
@@ -79,67 +80,13 @@ const getApiDiets = async () => {
     }
 };
 
-// //BUSCAR RECETAS POR DIETA //
-// const recipeByDiet = async (req, res) => {
-//     const { diet } = req.query;
-//     try {
-//         if (!name) {
-//             res.send('Do not Write name')
-//         } else if (name) {
+function FindNeedle(haystack, needle) {
+    for (let i = 0; i < haystack.length; i++) {
+        if (haystack.slice(i, needle.length + i) === needle) return i;
+    }
+    return -1;
+};
 
-//             // BUSCAR RECETAS EN LA DB //
-//             let findDb = await Recipe.findAll({
-//                 include: [{
-//                     model: Diet,
-//                 }]
-//             })
-//             let dbRecipes = findDb.map((e) => {
-//                 return {
-//                     title: e.title,
-//                     id: e.id,
-//                     diet: e.diets,
-//                     image: e.image.length ? e.image : "image not available",
-//                     summary: e.summary.length ? e.summary : "Summary not available",
-//                     healthScore: e.healthScore,
-//                     analyzedInstructions: e.analyzedInstructions.length ? e.analyzedInstructions : "Analyze not available",
-//                 }
-//             })
 
-//             filterDb = await dbRecipes.filter((e) => {
-//                 if (FindNeedle(e.title.toLowerCase(), name.toLowerCase()) > -1) {
-//                     return (e);
-//                 }
-//             })
-//             // BUSCAR RECETAS EN LA API //
-//             const apiInfo = (await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=100&addRecipeInformation=true`)).data
-//             let data = apiInfo.results;
-//             let apiRecipes = data.map((e) => {
-//                 return {
-//                     title: e.title,
-//                     id: e.id,
-//                     diet: e.diets.length ? e.diets : "Diet not available",
-//                     image: e.image,
-//                     summary: e.summary.length ? e.summary : "Summary not available",
-//                     healthScore: e.healthScore,
-//                     analyzedInstructions: e.analyzedInstructions.length ? e.analyzedInstructions[0].steps.map((e) => e.step) : ["Analize no available"],
-//                 }
-//             })
-//             filterApi = await apiRecipes.filter((e) => {
-//                 if (FindNeedle(e.title.toLowerCase(), name.toLowerCase()) > -1) {
-//                     return (e);
-//                 }
-//             })
-
-//             const totalRecipes = filterDb.concat(filterApi);
-//             console.log(totalRecipes)
-//             res.send(totalRecipes)
-
-//         } else {
-//             res.status(400).send('Do not exists this Recipe!')
-//         }
-//     } catch (error) {
-//         res.status(400).send({ 'Fail recipeByName': error });
-//     }
-// };
 
 module.exports = { getDiets, getApiDiets };

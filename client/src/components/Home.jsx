@@ -14,9 +14,8 @@ export default function Home() {
   const allDiets = useSelector((state) => state.diets);
   // console.log("state.recipes", allDiets.length);
 
-  const diet = allRecipes;
 
-  // ESTADO PARA FILTRAR POR NOMBRE DE LAS RECETAS//
+  // ESTADO PARA BUSCAR POR NOMBRE DE LAS RECETAS//
   const [name, setName] = useState("");
 
   //ESTADO LOCAL PARA ORDENAR SEGÚN EL FILTRO//
@@ -49,22 +48,22 @@ export default function Home() {
     setPage(1);
   }
 
+  //FILTRAR RECETAS POR DIETA //
   function handleFilterBydiets(e) {
     e.preventDefault();
     dispatch(filterBydiets(e.target.value));
-    setOrder(`Ordenado ${e.target.value}`);
+    //setOrder(`Ordenado ${e.target.value}`);
     setPage(1);
   }
 
   //PAGINADO//
-
   const [page, setPage] = useState(1);
 
   //cantidad recetas por página
   let recipesPerPage = 0;
   if (page === 1) {
     recipesPerPage = 9;
-  } else if (page !== 1) {
+  } else if (page > 1) {
     recipesPerPage = 10;
   }
 
@@ -80,6 +79,7 @@ export default function Home() {
   const paginado = (pageNumber) => {
     setPage(pageNumber);
   };
+
 
   return (
     // NAV-BAR
@@ -128,47 +128,25 @@ export default function Home() {
           setPage={setPage}
           setOrder={setOrder}
           name={name}
-          diet={diet}
         />
 
         {/* DIET FILTER */}
-        {/* <div>
-          <select onChange={(e) => handleFilterBydiets(e)}>
-            <option value={"all"}>All Diet</option>
-            <option value={"dairyfree"}>dairy free</option>
-          </select>
-        </div> */}
 
-        <select
-          onChange={(e) => handleFilterBydiets(e)}
-          defaultValue=""
-          className="selects"
-        >
-          <option>All Diets</option>
+        <select onChange={(e) => handleFilterBydiets(e)} className="selects">
+          <option value="all">All Diets</option>
 
-          {allDiets.map((e) =>
+          {allDiets?.map((e) =>
             e.name ? (
-              <option key={e.id}>{e.name}</option>
+              <option value={e.name} key={e.id}>
+                {e.name}
+              </option>
             ) : (
-              <option key={e.id}>{e}</option>
+              <option value={e.name} key={e.id}>
+                {e}
+              </option>
             )
           )}
         </select>
-
-        {/* <div>
-          <select onChange={(e)=>handleFilterBydiets(e)}>
-            <option value={"all"}>All Diet</option>
-            <option value={"dairyfree"}>dairy free</option>
-            <option value={"glutenfree"}>gluten free</option>
-            <option value={"ketogenic"}>ketogenic</option>
-            <option value={"lactoovovegetarian"}>lacto ovo vegetarian</option>
-            <option value={"paleolithic"}>paleolithic</option>
-            <option value={"pescatarian"}>pescatarian</option>
-            <option value={"primal"}>primal</option>
-            <option value={"vegan"}>vegan</option>
-            <option value={"vegan"}>whole30</option>
-          </select>
-        </div> */}
 
         {/* ORDENAMIENTOS */}
 
@@ -201,7 +179,7 @@ export default function Home() {
           currentRecipe?.map((e) => {
             return (
               <Link to={"/home/" + e.id} key={e.id}>
-                <Card title={e.title} image={e.image} diet={diet} />
+                <Card title={e.title} image={e.image} diet={e.diet} />
               </Link>
             );
           })

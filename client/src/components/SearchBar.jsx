@@ -4,7 +4,7 @@ import { findByTitle } from "../redux/actions";
 
 //import "./SearchBar.css";
 
-export default function SearchBar({ setPage, name, setName, setOrder }) {
+export default function SearchBar({ setPage, name, setName }) {
   const dispatch = useDispatch();
 
   // FUNCIÓN PARA CAPTURAR EL INPUT Y EVITAR QUE SE RECARGUE LA PÁGINA//
@@ -25,7 +25,6 @@ export default function SearchBar({ setPage, name, setName, setOrder }) {
     dispatch(findByTitle(name));
     setName("");
     setPage(1);
-    setOrder(`Ordenado ${e.target.value}`);
   }
 
   return (

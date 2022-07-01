@@ -17,7 +17,8 @@ export default function Paginado({
 //     </nav>
 //   );
 // }
-
+//console.log('totalRecipe', totalRecipe)
+//console.log('page', page)
 
 return (
     <nav>

@@ -61,7 +61,7 @@ export default function Detail() {
       </div>
       <div className="informations">
         <div className="sup">
-          <img className="img" src={details.image} alt="?" />
+          <img className="detail-img" src={details.image} alt="?" />
           <div>
             <h2>Type of Diet: </h2>
             {details.diet

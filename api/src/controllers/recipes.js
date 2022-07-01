@@ -45,7 +45,7 @@ const recipeById = async (req, res) => {
                 return {
                     title: e.title,
                     id: e.id,
-                    diet: e.diets.length ? e.diets : "Diet not available",
+                    diet: e.diets.length ? e.diets : ["not available"],
                     image: e.image,
                     summary: e.summary.length ? e.summary : "Summary not available",
                     healthScore: e.healthScore,
@@ -70,9 +70,9 @@ const allRecipe = async (req, res) => {
             return {
                 title: e.title,
                 id: e.id,
-                diet: e.diets.length ? e.diets : "Diet not available",
+                diet: e.diets.length ? e.diets : ["not available"],
                 image: e.image,
-                summary: e.summary.length ? e.summary : "Summary not available",
+                summary: e.summary.length ? e.summary : "not available",
                 healthScore: e.healthScore,
                 analyzedInstructions: e.analyzedInstructions.length ? e.analyzedInstructions[0].steps.map((e) => e.step) : ["Analize no available"],
             }
@@ -123,13 +123,13 @@ const recipeByName = async (req, res) => {
                     title: e.title,
                     id: e.id,
                     diet: e.diets,
-                    image: e.image.length ? e.image : "image not available",
-                    summary: e.summary.length ? e.summary : "Summary not available",
+                    image: e.image.length ? e.image : "not available",
+                    summary: e.summary.length ? e.summary : "not available",
                     healthScore: e.healthScore,
                     analyzedInstructions: e.analyzedInstructions.length ? e.analyzedInstructions : "Analyze not available",
                 }
             })
-            console.log('filter DB', dbRecipes)
+            //console.log('filter DB', dbRecipes)
 
             filterDb = await dbRecipes.filter((e) => {
                 if (FindNeedle(e.title.toLowerCase(), name.toLowerCase()) > -1) {
@@ -143,9 +143,9 @@ const recipeByName = async (req, res) => {
                 return {
                     title: e.title,
                     id: e.id,
-                    diet: e.diets.length ? e.diets : "Diet not available",
+                    diet: e.diets.length ? e.diets : ["not available"],
                     image: e.image,
-                    summary: e.summary.length ? e.summary : "Summary not available",
+                    summary: e.summary.length ? e.summary : "not available",
                     healthScore: e.healthScore,
                     analyzedInstructions: e.analyzedInstructions.length ? e.analyzedInstructions[0].steps.map((e) => e.step) : ["Analize no available"],
                 }
@@ -155,7 +155,7 @@ const recipeByName = async (req, res) => {
                     return (e);
                 }
             })
-            console.log('filter api', apiRecipes)
+            //console.log('filter api', apiRecipes)
 
             const totalRecipes = filterDb.concat(filterApi);
             res.send(totalRecipes)

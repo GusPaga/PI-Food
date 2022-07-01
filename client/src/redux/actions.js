@@ -7,6 +7,8 @@ export const FILTER_BY_RECIPE_TITLE = 'FILTER_BY_RECIPE_TITLE';
 export const ORDER_BY = 'ORDER_BY';
 export const GET_DETAILS = 'GET_DETAILS';
 export const CREATE_ACTIVITY = 'CREATE_ACTIVITY'
+export const FILTER_BY_RECIPE_DIET = 'FILTER_BY_RECIPE_DIET';
+
 
 // función para traer todas las recetas //
 export function getRecipes() {
@@ -55,6 +57,22 @@ export function findByTitle(name) {
     }
 }
 
+// //función para buscar por dieta//
+// export function findByDiet(diet) {
+//     return async function (dispatch) {
+
+//         try {
+//             let titles = await axios.get(`http://localhost:3001/recipe?name=${diet}`)
+//             return dispatch({
+//                 type: FILTER_BY_RECIPE_DIET,
+//                 payload: titles.data,
+//             })
+//         } catch (error) {
+//             console.log({ 'Fail actions findByTitle': error })
+//         }
+//     }
+// }
+
 //función para ordenar por alfabeto y healthScore
 export function orderBy(payload) {
     return {
@@ -63,13 +81,6 @@ export function orderBy(payload) {
     }
 }
 
-//FUNCIÓN PARA FILTRAR POR DIETAS
-export function filterBydiets(payload) {
-    return {
-        type: FILTER_BY_DIETS,
-        payload
-    }
-}
 
 export function getDetails(id) {
     return async function (dispatch) {
@@ -98,7 +109,14 @@ export function recipesCreator(payload) {
                 payload: creator.data
             })
         } catch (error) {
-            console.log({ 'Fail recipesCreator': error })   
+            console.log({ 'Fail recipesCreator': error })
         }
     };
 };
+
+export function filterBydiets(payload) {
+    return {
+        type: FILTER_BY_DIETS,
+        payload
+    }
+}

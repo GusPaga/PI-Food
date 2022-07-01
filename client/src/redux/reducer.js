@@ -1,4 +1,4 @@
-import { GET_RECIPES, GET_DIETS, FILTER_BY_RECIPE_TITLE, ORDER_BY, FILTER_BY_DIETS, GET_DETAILS, CREATE_ACTIVITY } from './actions';
+import { GET_RECIPES, GET_DIETS, FILTER_BY_RECIPE_TITLE, ORDER_BY, FILTER_BY_DIETS, GET_DETAILS, CREATE_ACTIVITY, FILTER_BY_RECIPE_DIET } from './actions';
 
 const initialState = {
     recipes: [],
@@ -27,6 +27,12 @@ export default function rootReducer(state = initialState, action) {
 
 
         case FILTER_BY_RECIPE_TITLE:
+            return {
+                ...state,
+                recipes: action.payload,
+            }
+
+        case FILTER_BY_RECIPE_DIET:
             return {
                 ...state,
                 recipes: action.payload,
@@ -80,11 +86,11 @@ export default function rootReducer(state = initialState, action) {
                 recipes: orderArr
             }
         case FILTER_BY_DIETS:
-            let allDiets = state.allDiets;
-            let filteredDiet = action.payload === 'all' ? allDiets : allDiets.filter((e) => e.diet === action.payload)
+            let allDiets = state.allRecipes;
+            let filteredDiet = action.payload === 'all' ? allDiets : allDiets.filter((e) => e.diet?.includes(action.payload)) 
             return {
                 ...state,
-                diets: filteredDiet
+                recipes: filteredDiet
             }
 
         case GET_DETAILS:
@@ -94,7 +100,7 @@ export default function rootReducer(state = initialState, action) {
             }
 
         case CREATE_ACTIVITY:
-            return{
+            return {
                 ...state
             }
 
