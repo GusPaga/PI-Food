@@ -57,19 +57,12 @@ export function findByTitle(name) {
     }
 }
 
-//función para ordenar por alfabeto y healthScore
-export function orderBy(payload) {
-    return {
-        type: ORDER_BY,
-        payload
-    }
-}
 
 export function getDetails(id) {
     return async function (dispatch) {
         try {
             let details = await axios.get(`http://localhost:3001/recipes/${id}`);
-            console.log('actions', details.data[0])
+            console.log('actions', details[0])
             return dispatch({
                 type: GET_DETAILS,
                 payload: details.data[0]
@@ -77,6 +70,13 @@ export function getDetails(id) {
         } catch (error) {
             console.log({ 'Fail getDetails': error })
         }
+    }
+}
+//función para ordenar por alfabeto y healthScore
+export function orderBy(payload) {
+    return {
+        type: ORDER_BY,
+        payload
     }
 }
 

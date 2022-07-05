@@ -1,9 +1,9 @@
 const { Router } = require('express');
-const { getDiets } = require('../controllers/diets');
+const { getDiets } = require('../controllers/getDiets');
 const { allRecipe } = require('../controllers/allRecipe');
-const { recipeByName } = require('../controllers/recipesByName');
 const { recipeById } = require('../controllers/recipesById');
-const {createRecipes}= require('../controllers/postRecipes');
+const { createRecipes } = require('../controllers/postRecipes');
+const { recipeByName } = require('../controllers/recipesByName');
 
 const router = Router();
 

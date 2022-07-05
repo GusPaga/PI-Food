@@ -10,7 +10,7 @@ export default function Detail() {
   const params = useParams();
 
   console.log("details", details);
-  console.log("summary", details.summary);
+  //console.log("summary", details.summary);
   // let analize = details.analyzedInstructions;
   // console.log(analize);
 

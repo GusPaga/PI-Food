@@ -19,18 +19,18 @@ const getApiDiets = async () => {
     try {
         const apiInfo = (await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=100&addRecipeInformation=true`)).data;
 
-        //RECETA //
+        //RECIPE //
         let data = apiInfo.results
 
-        //MAPEO DIETS, UNO LAS CADENAS Y ELIMINO LOS ESPACIOS VACIOS, LUEGO LOS SEPARO POR LA COMA PARA QUE ME DEVUELVA UN ARRAY DE STRINGS //
+        //MAP DIETS //
         let diets = data.map((e) => e.diets)
         let joinReplace = diets.join(', ').replace(/ /g, "");
         let separeted = joinReplace.split(",");
 
-        //FILTRAR REPETIDOS //
+        //ERASE REPETS //
         let filtrados = separeted.filter((item, index, arr) => arr.indexOf(item) === index)
 
-        //ELIMINO EL VACIO //
+        // ERASE EMPTY //
         let filtered = filtrados.filter((e) => e.length)
         //console.log(filtered)
 
@@ -68,7 +68,7 @@ const getApiDiets = async () => {
 
         let diet = result.sort()
 
-        // ENVIAR DATOS A LA BASE //
+        // PUSH IN DB //
         for (let i = 0; i < diet.length - 1; i++) {
             await Diet.findOrCreate({
                 where: { name: diet[i] }
@@ -79,14 +79,6 @@ const getApiDiets = async () => {
         console.log('getApiDiets fail!', error)
     }
 };
-
-function FindNeedle(haystack, needle) {
-    for (let i = 0; i < haystack.length; i++) {
-        if (haystack.slice(i, needle.length + i) === needle) return i;
-    }
-    return -1;
-};
-
 
 
 module.exports = { getDiets, getApiDiets };

@@ -5,6 +5,7 @@ const axios = require('axios');
 
 const recipeById = async (req, res) => {
     const { id } = req.params;
+    console.log(id)
     try {
         if (isNaN(Number(id))) {
             // FIND RECIPES IN DB//
@@ -44,6 +45,7 @@ const recipeById = async (req, res) => {
 
             let filterApi = apiRecipes.filter((e) => e.id === Number(id))
             res.send(filterApi);
+
         }
     } catch (error) {
         res.status(400).send({ 'Fail recipeById': error })
@@ -51,4 +53,4 @@ const recipeById = async (req, res) => {
 };
 
 
-module.exports = recipeById;
+module.exports = {recipeById};

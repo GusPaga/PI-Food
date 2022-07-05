@@ -46,4 +46,4 @@ const allRecipe = async (req, res) => {
     }
 }
 
-module.exports = allRecipe;
+module.exports = {allRecipe};

@@ -2,8 +2,7 @@ import React from "react";
 import "./Card.css";
 
 export default function Card({ image, title, diet }) {
-  console.log(diet);
-
+  
   return (
     <div className="card">
       <img src={image} alt={title} />
