@@ -1,7 +1,8 @@
-p{
+p {
     text-align: justify;
     font-style: italic;
 }
+
 .det-logo {
     display: flex;
     align-items: center;
@@ -16,11 +17,24 @@ p{
     height: 50px;
 }
 
-.type{
-    background-color: rgba(0, 0, 0, 0.4);
-    color: white;   
+.det-diet{
+    text-align-last: center;
 }
-.informations {
+.det-title {
+    display: flex;
+    justify-content: center;
+    height: 100px;
+    align-items: center;
+    font-size: 30px;
+    gap: 25px;
+}
+
+.type {
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+}
+
+.det-informations {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     border: 1px solid grey;
@@ -32,9 +46,16 @@ p{
     height: 70%;
     width: 70%;
     margin: auto;
+    cursor: pointer;
 }
 
-.sup{
+.det-informations:hover {
+    transform: translateY(0) scale(1.2);
+    transition: 0.4s;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.det-sup {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     text-align: inherit;
@@ -42,35 +63,42 @@ p{
     text-transform: capitalize;
 }
 
-.inf{
+.det-inf {
+    padding: 5px;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
     display: block;
+    margin: 0px 15px;
+    grid-template-columns: repeat(2, 1fr);
 }
 
-.det-buttons:focus{
+.det-buttons:focus {
     background-color: rgba(0, 0, 0, 0.479);
     color: white;
 }
 
 .det-buttons:hover {
     background-color: #1B1464;
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.det-nav-button {
+    display: flex;
+    /* justify-content: end; */
+    margin-right: 30px;
+    gap: 20px;
+    align-items: center;
 }
 
 .det-buttons {
-    display: flex;
-    align-items: center;
-    margin-right: 20px;
-    grid-gap: 20px;
-    gap: 20px;
-    justify-content: flex-end;
+    height: 30px;
+    width: 100px;
     color: white;
     border-radius: 10px;
     border: 1px solid grey;
     background-color: #0652DD;
 }
-.detail-img{
-    width: 250px;
-    height: 200px;
+
+.det-img {
+    width: 350px;
+    height: 250px;
 }

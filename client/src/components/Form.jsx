@@ -30,6 +30,7 @@ export default function Form() {
 
   const [input, setInput] = useState({
     title: "",
+    image: "",
     diet: [],
     summary: "",
     healthScore: "",
@@ -57,6 +58,7 @@ export default function Form() {
     dispatch(recipesCreator(input));
     setInput({
       title: "",
+      image: "",
       diet: [],
       summary: "",
       healthScore: "",
@@ -101,8 +103,8 @@ export default function Form() {
 
   return (
     <div>
-      <nav className="act-nav">
-        <div className="act-logo">
+      <nav className="form-nav">
+        <div className="form-logo">
           <img
             src="https://assets.soyhenry.com/henry-landing/assets/Henry/logo-white.png"
             alt="logo Henry"
@@ -110,7 +112,7 @@ export default function Form() {
             width="100px"
           ></img>
         </div>
-        <div className="act-buttons">
+        <div className="form-nav-buttons">
           <Link to={"/home"}>
             <button>HOME</button>
           </Link>
@@ -119,20 +121,22 @@ export default function Form() {
           </Link>
         </div>
       </nav>
+
       <h1>CREATE YOUR SELF RECIPE!</h1>
 
       <form className="form" onSubmit={(e) => handleSubmit(e)}>
-        <div className="div">
+        <div>
           <label>NAME OF THE RECIPE</label>
           <input
+            className="form-input"
             type="text"
             name="title"
             value={input.title}
             onChange={(e) => handleChange(e)}
           />
-
-          <label>HEALTH SCORE</label>
+          <label className="form-label">HEALTH SCORE</label>
           <input
+            className="form-input"
             type="number"
             min={1}
             max={100}
@@ -141,30 +145,40 @@ export default function Form() {
             onChange={(e) => handleChange(e)}
           />
 
-          <label>SUMMARY</label>
+          <label className="form-label">SUMMARY</label>
           <input
+            className="form-input"
             type="text"
             name="summary"
             value={input.summary}
             onChange={(e) => handleChange(e)}
           />
 
-          <label>STEP BY STEP</label>
+          <label className="form-label">STEP BY STEP</label>
           <input
+            className="form-input"
             type="text"
             name="analyzedInstructions"
             value={input.analyzedInstructions}
             onChange={(e) => handleChange(e)}
           />
+          <label>INSERT IMAGE</label>
+          <input
+            className="form-input"
+            type="text"
+            name="image"
+            value={input.image}
+            onChange={(e) => handleChange(e)}
+          />
 
           <div className="div">
-            <label>TYPE OF DIET</label>
+            <label className="form-label">TYPE OF DIET</label>
             <select
               onChange={(e) => handleSelect(e)}
               defaultValue=""
-              className="selects"
+              className="form-input"
             >
-              <option name="" disabled>
+              <option value="" disabled>
                 Select Diet
               </option>
               {diets?.map((e) => (
@@ -174,12 +188,12 @@ export default function Form() {
               ))}
             </select>
 
-            <ul className="div">
+            <ul>
               <li>
                 {input.diet.length > 0 &&
                   input.diet.map((e) => <p key={e.id}>{e}</p>)}
                 {input.diet.length > 0 && (
-                  <button onClick={(e) => onClose(e)}>Clear All Diet</button>
+                  <button onClick={(e) => onClose(e)}>CLEAR DIET</button>
                 )}
               </li>
             </ul>
@@ -192,11 +206,11 @@ export default function Form() {
             <p className="errors">{errors.analyzedInstructions}</p>
           )}
         </div>
-        <button>CREATE</button>
+        <button className="form-button">CREATE</button>
       </form>
     </div>
   );
-};
+}
 
 //RESUMEN: Importar React en el componente, crear la acción y el caso del reducer, luego, crear los componentes del form; botones, inputs, titulos, etc. Después darle funcionalidad, creando los estados y los handles necesarios.
 //Luego de probar que funcione todo hacer las validaciones.

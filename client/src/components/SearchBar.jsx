@@ -1,8 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { findByTitle } from "../redux/actions";
-
-//import "./SearchBar.css";
+import "./SearchBar.css";
 
 export default function SearchBar({ setPage, name, setName }) {
   const dispatch = useDispatch();
@@ -23,20 +22,21 @@ export default function SearchBar({ setPage, name, setName }) {
       return;
     }
     dispatch(findByTitle(name));
-    setName("");
     setPage(1);
+    setName("");
   }
 
   return (
-    <div>
+    <div className="searchB">
       <input
-        name={name}
+      className="search-filtros-select"
+        value={name}
         type="text"
         placeholder="write a Recipe..."
         onChange={(e) => handleInputChange(e)}
       />
       <button type="submit" onClick={(e) => handleSubmit(e)}>
-        Find
+        FIND
       </button>
     </div>
   );

@@ -1,0 +1,22 @@
+.searchB {
+    height: 25px;
+    border-radius: 5px;
+}
+
+.searchB button {
+    height: 25px;
+    width: 100px;
+    color: white;
+    border-radius: 10px;
+    border: 1px solid grey;
+    background-color: #0652DD;
+}
+
+.search-filtros-select {
+    width: 200px;
+    height: 20px;
+    text-align: center;
+    border-radius: 5px;
+    margin-right: 10px;
+    border: 1px solid grey;
+}

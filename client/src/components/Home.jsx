@@ -14,7 +14,6 @@ export default function Home() {
   const allDiets = useSelector((state) => state.diets);
   // console.log("state.recipes", allDiets.length);
 
-
   // ESTADO PARA BUSCAR POR NOMBRE DE LAS RECETAS//
   const [name, setName] = useState("");
 
@@ -80,7 +79,6 @@ export default function Home() {
     setPage(pageNumber);
   };
 
-
   return (
     // NAV-BAR
     //LOGO
@@ -109,7 +107,7 @@ export default function Home() {
 
         {/* NAVIGATION BUTTONS */}
 
-        <div className="paginado">
+        <div className="home-nav-buttons">
           <Link to="/form">
             <button>CREATE</button>
           </Link>
@@ -123,16 +121,11 @@ export default function Home() {
         {/* FILTROS */}
         {/* FIND BY NAME FILTER */}
 
-        <SearchBar
-          setName={setName}
-          setPage={setPage}
-          setOrder={setOrder}
-          name={name}
-        />
-
         {/* DIET FILTER */}
 
-        <select onChange={(e) => handleFilterBydiets(e)} className="selects">
+        <select 
+        className="home-filtros-select"
+        onChange={(e) => handleFilterBydiets(e)}>
           <option value="all">All Diets</option>
 
           {allDiets?.map((e) =>
@@ -151,7 +144,9 @@ export default function Home() {
         {/* ORDENAMIENTOS */}
 
         <div className="home-filtros">
-          <select onChange={(e) => handleOrder(e)}>
+          <select 
+          className="home-filtros-select"
+          onChange={(e) => handleOrder(e)}>
             <option value="A-Z">Name (A - Z)</option>
             <option value="Z-A">Name(Z - A)</option>
             <option value="Asc">HealthScore(Asc)</option>
@@ -159,9 +154,16 @@ export default function Home() {
           </select>
         </div>
 
+        <SearchBar
+          setName={setName}
+          setPage={setPage}
+          setOrder={setOrder}
+          name={name}
+        />
+
         {/* CLEAR BUTTON */}
 
-        <div className="home-search">
+        <div className="home-clear-buttons">
           <button
             onClick={(e) => {
               handleClick(e);

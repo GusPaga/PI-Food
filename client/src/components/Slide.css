@@ -1,0 +1,80 @@
+.sli-slide {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.sli {
+    min-width: 100%;
+    overflow: hidden;
+    transition: 0.3s aese all;
+    z-index: 9;
+    max-height: 500px;
+    position: relative;
+}
+
+.sli-img {
+    width: 100%;
+    vertical-align: top;
+}
+
+.texto {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    width: 100%;
+    padding: 10px 60px;
+    position: absolute;
+    bottom: 0;
+    font-size: 25px;
+    text-align-last: center;
+}
+
+.sli-principal {
+    position: relative;
+}
+
+.controles {
+    position: absolute;
+    bottom: 0;
+    z-index: 20;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
+}
+
+.botton-right {
+    pointer-events: all;
+    cursor: pointer;
+    color: red;
+    background: none;
+    border: none;
+    outline: none;
+    width: 50px;
+    height: 100%;
+    text-align: center;
+    position: absolute;
+    right: 0;
+}
+
+.botton-right :hover {
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.botton-left {
+    pointer-events: all;
+    cursor: pointer;
+    color: red;
+    background: none;
+    border: none;
+    outline: none;
+    width: 50px;
+    height: 100%;
+    text-align: center;
+    position: absolute;
+    left: 0;
+}
+
+.botton-left :hover {
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.2);
+}

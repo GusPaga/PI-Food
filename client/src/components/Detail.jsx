@@ -9,8 +9,10 @@ export default function Detail() {
   const dispatch = useDispatch();
   const params = useParams();
 
-  //   let analize = details.analyzedInstructions;
-  // console.log(analize)
+  console.log("details", details);
+  console.log("summary", details.summary);
+  // let analize = details.analyzedInstructions;
+  // console.log(analize);
 
   useEffect(() => {
     dispatch(getDetails(params.id));
@@ -37,10 +39,10 @@ export default function Detail() {
           ></img>
         </div>
 
-        <div >
+        <div className="det-nav-button">
           <Link to="/home">
             <button
-            className="det-buttons"
+              className="det-buttons"
               onClick={(e) => {
                 handleClick(e);
               }}
@@ -49,27 +51,26 @@ export default function Detail() {
             </button>
           </Link>
           <Link to="/form">
-            <button className="det-buttons"
-            >CREATE</button>
+            <button className="det-buttons">CREATE</button>
           </Link>
         </div>
       </nav>
 
-      <div>
+      <div className="det-title">
         <h3>{details.title}</h3>
         <h3>Health Score: {details.healthScore} pts.</h3>
       </div>
-      <div className="informations">
-        <div className="sup">
-          <img className="detail-img" src={details.image} alt="?" />
-          <div>
+      <div className="det-informations">
+        <div className="det-sup">
+          <img className="det-img" src={details.image} alt="?" />
+          <div className="det-diet">
             <h2>Type of Diet: </h2>
             {details.diet
               ? details.diet.map((e) => <p key={e}>{e}</p>)
               : "Diet not available"}
           </div>
         </div>
-        <div className="inf">
+        <div className="det-inf">
           <div>
             <h3>Analyzed Instructions</h3>
             {details.analyzedInstructions
@@ -77,14 +78,15 @@ export default function Detail() {
               : "Diet not available"}
           </div>
 
-          <div className="body">
+          <div>
             <h3>Summary:</h3>
-            {details.summary ? (
+            {details?.summary(
               <p>
-                {details.summary.replaceAll(/(<b>|<\/b>|<a href=|<\/a>|>)/g, " ")}
+                {details.summary.replaceAll(
+                  /(<b>|<\/b>|<a href=|<\/a>|>)/g,
+                  " "
+                )}
               </p>
-            ) : (
-              <p>{details.summary}</p>
             )}
           </div>
         </div>
