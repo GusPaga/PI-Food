@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { findByTitle } from "../redux/actions";
-import "./SearchBar.css";
+import "./styles/SearchBar.css";
 
 export default function SearchBar({ setPage, name, setName }) {
   const dispatch = useDispatch();

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import "./Slide.css";
+import "./styles/Slide.css";
 import img1 from "../image/bread.jpg";
 import img2 from "../image/olive.jpg";
 import img3 from "../image/pasta.jpg";
@@ -59,7 +59,7 @@ export default function Slide() {
   useEffect(() => {
     intervalSlide.current = setInterval(() => {
       front();
-    }, 5000);
+    }, 4000);
     //eliminamos los intervalos//
     slide.current.addEventListener("mouseenter", () => {
       clearInterval(intervalSlide.current);
@@ -68,7 +68,7 @@ export default function Slide() {
     slide.current.addEventListener("mouseleave", () => {
         intervalSlide.current= setInterval(()=>{
             front();
-        }, 5000);
+        }, 4000);
     });
     return ()=> clearInterval(intervalSlide.current)
   }, []);
@@ -79,13 +79,13 @@ export default function Slide() {
         <div className="sli">
           <img className="sli-img" src={img1} alt="pan" />
           <div className="texto">
-            <p>Coock never</p>
+            <p>Cooking has never</p>
           </div>
         </div>
         <div className="sli">
           <img className="sli-img" src={img2} alt="pan" />
           <div className="texto">
-            <p>was to easy!</p>
+            <p>been so easy!</p>
           </div>
         </div>
         <div className="sli">

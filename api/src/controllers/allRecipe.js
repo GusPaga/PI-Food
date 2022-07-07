@@ -46,4 +46,26 @@ const allRecipe = async (req, res) => {
     }
 }
 
-module.exports = {allRecipe};
+// const allRecipe = (req, res) => {
+//     Recipe.findAll({
+//         include: {
+//             model: Diet
+//         }
+//     })
+//         .then(response => {
+//             response.map((e) => {
+//                 return {
+//                     title: e.title,
+//                     id: e.id,
+//                     diet: e.diets.map((e) => e.name),
+//                     image: e.image,
+//                     summary: e.summary,
+//                     healthScore: e.healthScore,
+//                     analyzedInstructions: [e.analyzedInstructions],
+//                 }
+//             })
+//         }).catch(error=>console.log(error))
+// }
+
+module.exports = { allRecipe };
+

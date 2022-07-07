@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { getRecipes, getDiets, filterBydiets } from "../redux/actions";
 import { Link } from "react-router-dom";
-import Card from "./Card";
-import Paginado from "./Paginado";
+import Paginated from "./Paginated";
+import Ordering from "./Ordering";
 import SearchBar from "./SearchBar";
-import { getRecipes, getDiets, orderBy, filterBydiets } from "../redux/actions";
+import Card from "./Card";
 import "./Home.css";
 
 export default function Home() {
@@ -39,14 +40,6 @@ export default function Home() {
     dispatch(getRecipes());
   }
 
-  //ordenamientos alfa y healthScore
-  function handleOrder(e) {
-    e.preventDefault();
-    dispatch(orderBy(e.target.value));
-    setOrder(`Ordenado ${e.target.value}`);
-    setPage(1);
-  }
-
   //FILTRAR RECETAS POR DIETA //
   function handleFilterBydiets(e) {
     e.preventDefault();
@@ -58,6 +51,10 @@ export default function Home() {
   //PAGINADO//
   const [page, setPage] = useState(1);
 
+  const paginado = (pageNumber) => {
+    setPage(pageNumber);
+  };
+
   //cantidad recetas por página
   let recipesPerPage = 0;
   if (page === 1) {
@@ -65,7 +62,6 @@ export default function Home() {
   } else if (page > 1) {
     recipesPerPage = 10;
   }
-
   //índice del ultimo país de página
   const indexOfLastRecipe = page * recipesPerPage; //10, 20, 30, 40
 
@@ -75,9 +71,7 @@ export default function Home() {
   // me devuelve un array con los indices seleccionedos ej: pág 1 index 0 a 10, pág 2 index 10 a 20, )
   const currentRecipe = allRecipes.slice(indexOfFirstRecipe, indexOfLastRecipe);
   //console.log("current", currentRecipe);
-  const paginado = (pageNumber) => {
-    setPage(pageNumber);
-  };
+
 
   return (
     // NAV-BAR
@@ -97,11 +91,11 @@ export default function Home() {
         {/* PAGINADO */}
 
         <div>
-          <Paginado
+          <Paginated
+            state={allRecipes}
             page={page}
-            recipesPerPage={recipesPerPage}
-            totalRecipe={allRecipes.length}
             paginado={paginado}
+            recipesPerPage={recipesPerPage}
           />
         </div>
 
@@ -123,9 +117,10 @@ export default function Home() {
 
         {/* DIET FILTER */}
 
-        <select 
-        className="home-filtros-select"
-        onChange={(e) => handleFilterBydiets(e)}>
+        <select
+          className="home-filtros-select"
+          onChange={(e) => handleFilterBydiets(e)}
+        >
           <option value="all">All Diets</option>
 
           {allDiets?.map((e) =>
@@ -143,16 +138,7 @@ export default function Home() {
 
         {/* ORDENAMIENTOS */}
 
-        <div className="home-filtros">
-          <select 
-          className="home-filtros-select"
-          onChange={(e) => handleOrder(e)}>
-            <option value="A-Z">Name (A - Z)</option>
-            <option value="Z-A">Name(Z - A)</option>
-            <option value="Asc">HealthScore(Asc)</option>
-            <option value="Des">HealthScore(Des)</option>
-          </select>
-        </div>
+        <Ordering setPage={setPage} setOrder={setOrder} />
 
         <SearchBar
           setName={setName}

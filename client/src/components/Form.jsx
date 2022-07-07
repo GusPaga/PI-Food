@@ -2,7 +2,7 @@ import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getDiets, recipesCreator } from "../redux/actions";
-import "./Form.css";
+import "./styles/Form.css";
 
 function validate(input) {
   let errors = {};
@@ -34,7 +34,7 @@ export default function Form() {
     diet: [],
     summary: "",
     healthScore: "",
-    analyzedInstructions: "",
+    analyzedInstructions: [],
   });
 
   // FUNCIÓN PARA CARGAR LAS DIETAS EN EL REDUCER //
@@ -62,7 +62,7 @@ export default function Form() {
       diet: [],
       summary: "",
       healthScore: "",
-      analyzedInstructions: "",
+      analyzedInstructions: [],
     });
     console.log("input", input);
     alert("Receta Creada con Exito");
@@ -193,7 +193,7 @@ export default function Form() {
                 {input.diet.length > 0 &&
                   input.diet.map((e) => <p key={e.id}>{e}</p>)}
                 {input.diet.length > 0 && (
-                  <button onClick={(e) => onClose(e)}>CLEAR DIET</button>
+                  <button className="clearDiet" onClick={(e) => onClose(e)}>CLEAR DIET</button>
                 )}
               </li>
             </ul>

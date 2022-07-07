@@ -2,17 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import { getDetails } from "../redux/actions";
-import "./Details.css";
+import "./styles/Details.css";
 
 export default function Detail() {
   const details = useSelector((state) => state.details);
   const dispatch = useDispatch();
   const params = useParams();
-
-  console.log("details", details);
-  //console.log("summary", details.summary);
-  // let analize = details.analyzedInstructions;
-  // console.log(analize);
+  
 
   useEffect(() => {
     dispatch(getDetails(params.id));
@@ -67,27 +63,24 @@ export default function Detail() {
             <h2>Type of Diet: </h2>
             {details.diet
               ? details.diet.map((e) => <p key={e}>{e}</p>)
-              : "Diet not available"}
+              : "not available"}
           </div>
         </div>
         <div className="det-inf">
           <div>
             <h3>Analyzed Instructions</h3>
-            {details.analyzedInstructions
-              ? details.analyzedInstructions?.map((e) => <p key={e}>{e}</p>)
-              : "Diet not available"}
+            {Array.isArray(details.analyzedInstructions) ? (
+              details.analyzedInstructions?.map((e) => <p key={e}>{e}</p>)
+            ) : (
+              <p>{details.analyzedInstructions}</p>
+            )}
           </div>
 
           <div>
             <h3>Summary:</h3>
-            {details?.summary(
-              <p>
-                {details.summary.replaceAll(
-                  /(<b>|<\/b>|<a href=|<\/a>|>)/g,
-                  " "
-                )}
-              </p>
-            )}
+            <p>
+              {details.summary?.replace(/(<b>|<\/b>|<a href=|<\/a>|>)/g, "")}
+            </p>
           </div>
         </div>
       </div>
@@ -95,6 +88,4 @@ export default function Detail() {
   );
 }
 
-// .replace(/(<b>|<\/b>|<a href=\\|<\/a>)/g)
-//.replace(/(<b>|<\/b>|<a href=\\-<\/a>)/g, "")
-// (/(<b>|<\/b>|<a href=|<\/a>)/g)
+//{details?.summary(<p>{details.summary.replace(/(<b>|<\/b>|<a href=|<\/a>|>)/g," ")}</p> )}

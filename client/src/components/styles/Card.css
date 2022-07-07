@@ -20,18 +20,17 @@
 
 .card img{
     width: 380px;
-    height: 280px;
+    height: 250px;
     /* object-fit: cover; */
     object-position: center;
     border: 1px solid grey;
-    margin: 3px;
+    margin: 10px 2px;
 }
 
 .card-diet {
     display: flex;
     justify-content: space-around;
-    background-color: rgba(0, 0, 0, 0.6
-    )
+    background-color: rgba(0, 0, 0, 0.6)
 }
 
 .card-diet:hover {

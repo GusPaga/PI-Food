@@ -18,7 +18,7 @@
 }
 
 /* BOTONES DE NAVEGACIÓN */
-.home-nav-buttons button{
+.home-nav-buttons button {
     height: 30px;
     width: 100px;
     color: white;
@@ -27,6 +27,7 @@
     border: 1px solid grey;
     background-color: #0652DD;
 }
+
 .home-nav-buttons button:hover {
     background-color: #1B1464;
     box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);

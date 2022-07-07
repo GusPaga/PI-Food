@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Slide from "./Slide";
-import "./Landing.css";
+import "./styles/Landing.css";
 // import spices from '../image/spices.jpg'
 
 export default function Landing() {
@@ -27,6 +27,10 @@ export default function Landing() {
       </nav>
       <div className="lan-div">
         <h1 className="title">"Recipes of the Wold"</h1>
+        <div className="front">
+          <p>A proyect of "Gustavo Pagano"</p>
+          <p>GitHub: "GusPaga" - For: "HENRY"</p>
+        </div>
         <Slide />
       </div>
     </div>
