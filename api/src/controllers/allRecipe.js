@@ -40,7 +40,7 @@ const allRecipe = async (req, res) => {
 
         const totalRecipes = dbRecipes.concat(apiRecipes);
         //console.log('recipes test', totalRecipes)
-        res.send(totalRecipes)
+        res.status(200).send(totalRecipes)
     } catch (error) {
         res.status(400).send({ "Fail allRecipe": error })
     }
@@ -67,5 +67,5 @@ const allRecipe = async (req, res) => {
 //         }).catch(error=>console.log(error))
 // }
 
-module.exports = { allRecipe };
+module.exports = {allRecipe};
 

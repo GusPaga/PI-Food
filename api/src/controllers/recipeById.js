@@ -30,7 +30,7 @@ const recipeById = async (req, res) => {
                 }
             })
             let filterApi = dbRecipes.filter((e) => e.id === Number(id))
-            res.send(dbRecipes);
+            res.send(filterApi);
             //console.log('db', findDb)
 
         } else {

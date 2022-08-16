@@ -85,7 +85,7 @@ export default function Home() {
             alt="logo Henry"
             height="20px"
             width="100px"
-          ></img>
+          />
         </div>
 
         {/* PAGINADO */}
@@ -113,14 +113,13 @@ export default function Home() {
 
       <div className="home-filters">
         {/* FILTROS */}
-        {/* FIND BY NAME FILTER */}
 
         {/* DIET FILTER */}
 
         <select
           className="home-filtros-select"
           onChange={(e) => handleFilterBydiets(e)}
-        >
+          >
           <option value="all">All Diets</option>
 
           {allDiets?.map((e) =>
@@ -140,6 +139,7 @@ export default function Home() {
 
         <Ordering setPage={setPage} setOrder={setOrder} />
 
+          {/* FIND BY NAME FILTER */}
         <SearchBar
           setName={setName}
           setPage={setPage}

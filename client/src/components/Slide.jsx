@@ -35,42 +35,47 @@ export default function Slide() {
     }
   };
 
-//   const back = () => {
-//     //comprobamos que slide tenga elementos//
-//     if (slide.current.children.length > 0) {
-//       //obtenemos el índice del último elemento//
-//       const index = slide.current.children.length - 1;
-//       //obtenemos el último elemento//
-//       const last = slide.current.children[index];
-//       slide.current.insertBefore(last, slide.current.firstChild);
+  //   const back = () => {
+  //     //comprobamos que slide tenga elementos//
+  //     if (slide.current.children.length > 0) {
+  //       //obtenemos el índice del último elemento//
+  //       const index = slide.current.children.length - 1;
+  //       //obtenemos el último elemento//
+  //       const last = slide.current.children[index];
+  //       slide.current.insertBefore(last, slide.current.firstChild);
 
-//       slide.current.style.transition = "none";
+  //       slide.current.style.transition = "none";
 
-//       const width = slide.current.children[0].offsetWidth;
-//       slide.current.style.transform = `translateX(-${width}px)`;
+  //       const width = slide.current.children[0].offsetWidth;
+  //       slide.current.style.transform = `translateX(-${width}px)`;
 
-//       setTimeout(() => {
-//         slide.current.style.transition = `3000ms ease-out all`;
-//         slide.current.style.transform = `translateX(0)`;
-//       }, 30);
-//     }
-//   };
+  //       setTimeout(() => {
+  //         slide.current.style.transition = `3000ms ease-out all`;
+  //         slide.current.style.transform = `translateX(0)`;
+  //       }, 30);
+  //     }
+  //   };
 
   useEffect(() => {
+    console.log("componenet did mount")
     intervalSlide.current = setInterval(() => {
       front();
     }, 4000);
-    //eliminamos los intervalos//
+    //stop intervals//
     slide.current.addEventListener("mouseenter", () => {
       clearInterval(intervalSlide.current);
     });
-    //volveos a poner los intervalos//
+    // active again the intervals //
     slide.current.addEventListener("mouseleave", () => {
-        intervalSlide.current= setInterval(()=>{
-            front();
-        }, 4000);
+      intervalSlide.current = setInterval(() => {
+        front();
+      }, 4000);
     });
-    return ()=> clearInterval(intervalSlide.current)
+    // function to unmonut slider when the componet is not activ //
+    return () => {
+      console.log("component did unmount");
+      clearInterval(intervalSlide.current);
+    };
   }, []);
 
   return (

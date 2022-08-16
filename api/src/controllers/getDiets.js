@@ -8,10 +8,10 @@ const axios = require('axios');
 let getDiets = async (req, res) => {
     try {
         const dbDiet = await Diet.findAll({ include: Recipe })
-        res.json(dbDiet);
+        res.status(200).json(dbDiet);
 
     } catch (error) {
-        res.status(404).send('get Diet fail!', error)
+        res.status(400).send('get Diet fail!', error)
     }
 }
 
